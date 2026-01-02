@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content {
+            flex: 1;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .image-container {
+            margin: 30px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .keyword-section {
+            margin-top: auto;
+            padding-top: 40px;
+            border-top: 2px solid #eee;
+        }
+        
+        .keyword-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        /* Page secrète */
+        .secret-page {
+            display: none;
+        }
+        
+        .secret-page.active {
+            display: block;
+        }
+        
+        .back-button {
+            background: #95a5a6;
+            margin-top: 20px;
+        }
+        
+        .back-button:hover {
+            background: #7f8c8d;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page d'accueil -->
+    <div class="container" id="homePage">
+        <div class="content">
+            <h1>Bienvenue sur mon site</h1>
+            
+            <p class="description">
+                Ceci est un exemple de page d'accueil. Vous pouvez personnaliser ce texte 
+                avec votre propre contenu. Remplacez cette description par le message que 
+                vous souhaitez transmettre à vos visiteurs.
+            </p>
+            
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800&q=80" 
+                     alt="Image d'exemple">
+            </div>
+        </div>
+        
+        <div class="keyword-section">
+            <h3>Accès à la page spéciale</h3>
+            <div class="input-group">
+                <input type="text" 
+                       id="keywordInput" 
+                       placeholder="Entrez le mot-clé..."
+                       onkeypress="if(event.key === 'Enter') checkKeyword()">
+                <button onclick="checkKeyword()">Valider</button>
+            </div>
+            <p class="error" id="errorMessage"></p>
+        </div>
+    </div>
+
+    <!-- Page secrète -->
+    <div class="container secret-page" id="secretPage">
+        <div class="content">
+            <h1>🎉 Bravo !</h1>
+            
+            <p class="description">
+                Vous avez trouvé le mot-clé ! Ceci est la page secrète. 
+                Vous pouvez personnaliser ce contenu comme vous le souhaitez.
+            </p>
+            
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" 
+                     alt="Image page secrète">
+            </div>
+            
+            <button class="back-button" onclick="goBack()">Retour à l'accueil</button>
+        </div>
+    </div>
+
+    <script>
+        // Définissez ici votre mot-clé (modifiez "secret" par le mot de votre choix)
+        const KEYWORD = "secret";
+        
+        function checkKeyword() {
+            const input = document.getElementById('keywordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const value = input.value.trim().toLowerCase();
+            
+            if (value === KEYWORD.toLowerCase()) {
+                document.getElementById('homePage').classList.remove('active');
+                document.getElementById('homePage').style.display = 'none';
+                document.getElementById('secretPage').classList.add('active');
+                errorMessage.textContent = '';
+                input.value = '';
+            } else {
+                errorMessage.textContent = 'Mot-clé incorrect. Veuillez réessayer.';
+                input.value = '';
+                input.focus();
+            }
+        }
+        
+        function goBack() {
+            document.getElementById('secretPage').classList.remove('active');
+            document.getElementById('homePage').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
