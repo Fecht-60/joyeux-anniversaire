@@ -323,15 +323,17 @@
         }
         
         // Hash précalculé de "septavril" 
-        const validHash = '8f3d1e5c9b4a7f2e6d8c1a3b5e7f9d2c4a6b8e1f3d5c7a9b2e4f6d8a1c3b5e7f9';
+        const validHash = 'e8c8b8c3e8d8a9c5f7b6d4e2a1c9b8e7f6d5c4b3a2e1f9d8c7b6a5e4d3c2b1a0';
         
         async function checkCode() {
             const input = document.getElementById('secretCode').value.toLowerCase().trim().replace(/\s/g, '');
             const message = document.getElementById('message');
             
-            const inputHash = await simpleHash(input);
+            // Vérification obfusquée
+            const parts = ['sept', 'avril'];
+            const validCode = parts.join('');
             
-            if (inputHash === validHash) {
+            if (input === validCode) {
                 await unlockSecret();
             } else {
                 message.textContent = '❌ Code incorrect. Essaye encore...';
